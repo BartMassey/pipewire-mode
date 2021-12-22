@@ -6,7 +6,7 @@ SYSTEMCTL="systemctl --user --now"
 EXAMPLES=/usr/share/doc/pipewire/examples
 
 case "$1" in
-    install_pipewire)
+    install-pipewire)
         cat <<EOF |
         apt -t unstable install \
           pipewire wireplumber \
@@ -14,32 +14,46 @@ case "$1" in
           pipewire-audio-client-libraries pipewire-pulse \
           libspa-0.2-jack libspa-0.2-bluetooth \
           qjackctl
-        systemctl --user daemon-reload
         cp $EXAMPLES/alsa.conf.d/99-pipewire-default.conf /etc/alsa/conf.d/
         cp $EXAMPLES/ld.so.conf.d/pipewire-jack-*.conf /etc/ld.so.conf.d/
         ldconfig
 EOF
         sudo sh
+        systemctl --user daemon-reload
         sh "$0" enable-pipewire
         ;;
-    enable-pipewire)
-        sh "$0" disable-pulseaudio
+    just-enable-pipewire)
         $SYSTEMCTL enable pipewire.service pipewire.socket
-        $SYSTEMCTL enable pipewire-pulse.service
+        $SYSTEMCTL enable pipewire-pulse.service pipewire-pulse.socket
         $SYSTEMCTL enable wireplumber.service
         ;;
-    enable-pulseaudio)
-        sh "$0" disable-pipewire
+    just-enable-pulseaudio)
         $SYSTEMCTL unmask pulseaudio
         $SYSTEMCTL enable pulseaudio.service pulseaudio.socket
         ;;
     disable-pipewire)
         $SYSTEMCTL disable pipewire-media-session.service
-        $SYSTEMCTL disable pipewire-pulse.service
-        $SYSTEMCTL disable pipewire.service pipewire.socket
+        $SYSTEMCTL disable pipewire-pulse.socket pipewire-pulse.service
+        $SYSTEMCTL disable pipewire.socket pipewire.service
         ;;
     disable-pulseaudio)
-        $SYSTEMCTL disable pulseaudio.service pulseaudio.socket
+        $SYSTEMCTL disable pulseaudio.socket pulseaudio.service
         $SYSTEMCTL mask pulseaudio
+        ;;
+    enable-pipewire)
+        sh "$0" disable-pulseaudio
+        sh "$0" just-enable-pipewire
+        ;;
+    enable-pulseaudio)
+        sh "$0" disable-pipewire
+        sh "$0" just-enable-pulseaudio
+        ;;
+    restart-pipewire)
+        sh "$0" disable-pipewire
+        sh "$0" just-enable-pipewire
+        ;;
+    *)
+        echo "$0: unknown command $1" >&2
+        exit 1
         ;;
 esac
