@@ -13,7 +13,7 @@ case "$1" in
           pipewire-media-session- pulseaudio-module-bluetooth- \
           pipewire-audio-client-libraries pipewire-pulse \
           libspa-0.2-jack libspa-0.2-bluetooth \
-          qjackctl
+          qjackctl -y
         cp $EXAMPLES/alsa.conf.d/99-pipewire-default.conf /etc/alsa/conf.d/
         cp $EXAMPLES/ld.so.conf.d/pipewire-jack-*.conf /etc/ld.so.conf.d/
         ldconfig
