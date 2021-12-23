@@ -7,13 +7,18 @@ EXAMPLES=/usr/share/doc/pipewire/examples
 
 case "$1" in
     install-pipewire)
-        cat <<EOF |
-        apt -t unstable install \
+        sudo apt -t unstable install \
           pipewire wireplumber \
           pipewire-media-session- pulseaudio-module-bluetooth- \
           pipewire-audio-client-libraries pipewire-pulse \
           libspa-0.2-jack libspa-0.2-bluetooth \
           qjackctl
+        if [ $? -ne 0 ]
+        then
+            echo "cancelled: aborting" >&2
+            exit 1
+        fi
+        cat <<EOF |
         cp $EXAMPLES/alsa.conf.d/99-pipewire-default.conf /etc/alsa/conf.d/
         cp $EXAMPLES/ld.so.conf.d/pipewire-jack-*.conf /etc/ld.so.conf.d/
         ldconfig
