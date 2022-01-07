@@ -1,13 +1,19 @@
 # pipewire-mode: Control PipeWire (vs PulseAudio) on Debian
-Bart Massey 2021-12-21
+Bart Massey 2022-01
 
 This shell script's primary function is to cleanly install
 and set up current Debian `unstable`
 [PipeWire](https://wiki.debian.org/PipeWire) (tested with
 0.3.42) and associated utilities on a box running Debian
 Linux Bullseye. If the box is also running
-[Pulseaudio](https://wiki.debian.org/PulseAudio) that will
+[PulseAudio](https://wiki.debian.org/PulseAudio) that will
 be disabled (but not uninstalled in the process).
+
+If you are trying to clean up a broken audio install, and
+PulseAudio and/or PipeWire are installed, and you are very
+brave or very foolish, you can try the
+[cleanup instructions](CLEANUP.md) here to get things going
+again.
 
 ## Run
 
