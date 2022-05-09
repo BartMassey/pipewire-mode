@@ -37,7 +37,7 @@ EOF
         $SYSTEMCTL enable pulseaudio.service pulseaudio.socket
         ;;
     disable-pipewire)
-        $SYSTEMCTL disable pipewire-media-session.service
+        $SYSTEMCTL disable wireplumber.service
         $SYSTEMCTL disable pipewire-pulse.socket pipewire-pulse.service
         $SYSTEMCTL disable pipewire.socket pipewire.service
         ;;
