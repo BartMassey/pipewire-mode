@@ -12,6 +12,7 @@ case "$1" in
           pipewire-media-session- pulseaudio-module-bluetooth- \
           pipewire-audio-client-libraries pipewire-pulse \
           libspa-0.2-jack libspa-0.2-bluetooth \
+          libpipewire-0.3-dev libwireplumber-0.4-dev libspa-0.2-dev \
           qjackctl
         if [ $? -ne 0 ]
         then
