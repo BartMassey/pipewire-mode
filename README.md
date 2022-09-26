@@ -15,9 +15,18 @@ brave or very foolish, you can try the
 [cleanup instructions](CLEANUP.md) here to get things going
 again.
 
-## Run
+## Install
 
     sh pipewire-mode.sh install-pipewire
+
+You will also want to make sure that any PulseAudio
+`client.conf` files have `autospawn=no` in them. On my box,
+I had to fix
+`/etc/pulse/client.conf.d/01-enable-autospawn.conf`.
+Spawning is supposed to be under the control of `systemd`,
+but apparently not so much.
+
+## Run
 
 A variety of commands are available:
 
